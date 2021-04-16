@@ -40,12 +40,8 @@ exports.postEditProduct = (req, res, next) => {
     const updatedPrice = req.body.price
     const updatedDescription = req.body.description
     const updatedProduct = new Product(id, updatedTitle, updatedPrice, updatedDescription)
-    updatedProduct.save()
-        .then(() => {
-            res.redirect('/admin/products');
-        })
-        .catch(err => console.log(err));
-
+    updatedProduct.save();
+    res.redirect('/admin/products');
 }
 exports.deleteProduct = (req, res, next) => {
     const id = req.body.productId
@@ -56,15 +52,14 @@ exports.deleteProduct = (req, res, next) => {
 
 
 exports.getProducts = (req, res, next) => {
-
-    Product.fetchAll().then(([rows]) => {
-            res.render('admin/product', {
-                prods: rows,
-                docTitle: 'Products',
-                path: 'Products',
-                hasProduct: rows.length > 0,
-                img_url: 'https://loremflickr.com/320/240/',
-            });
-        })
-        .catch();
+    const products = Product.fetchAll((products) => {
+        res.render('admin/product', {
+            prods: products,
+            docTitle: 'shop',
+            path: 'shop',
+            hasProduct: products.length > 0,
+            img_url: 'https://loremflickr.com/320/240/',
+            folder: 'admin'
+        });
+    });
 }

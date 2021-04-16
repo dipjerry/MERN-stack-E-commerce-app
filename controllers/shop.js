@@ -1,44 +1,29 @@
 const Product = require('../models/product.js')
 const Cart = require('../models/cart.js')
-    // exports.getProduct = (req, res, next) => {
-    //     const products = Product.fetchAll((products) => {
-    //         res.render('shop/shop', {
-    //             prods: products,
-    //             docTitle: 'shop',
-    //             path: 'shop',
-    //             hasProduct: products.length > 0,
-    //             img_url: 'https://loremflickr.com/320/240/',
-    //             folder: 'shop'
-    //         });
-    //     });
-    // }
-
 exports.getProduct = (req, res, next) => {
-    Product.fetchAll().then(([rows]) => {
-            res.render('shop/shop', {
-                prods: rows,
-                docTitle: 'Index',
-                path: 'index',
-                hasProduct: rows.length > 0,
-                img_url: 'https://loremflickr.com/320/240/',
-                folder: 'shop'
-            });
-        })
-        .catch();
+    const products = Product.fetchAll((products) => {
+        res.render('shop/shop', {
+            prods: products,
+            docTitle: 'shop',
+            path: 'shop',
+            hasProduct: products.length > 0,
+            img_url: 'https://loremflickr.com/320/240/',
+            folder: 'shop'
+        });
+    });
 }
 
 exports.getIndex = (req, res, next) => {
-    Product.fetchAll().then(([rows]) => {
-            res.render('shop/index', {
-                prods: rows,
-                docTitle: 'Index',
-                path: 'index',
-                hasProduct: rows.length > 0,
-                folder: 'shop'
-            });
-        })
-        .catch();
+    const products = Product.fetchAll((products) => {
+        res.render('shop/index', {
+            prods: products,
+            docTitle: 'shop',
+            path: 'shop',
+            folder: 'shop',
+            hasProduct: products.length > 0,
 
+        });
+    });
 }
 exports.getCart = (req, res, next) => {
     const products = Product.fetchAll((products) => {
@@ -85,18 +70,17 @@ exports.getCheckoutDetails = (req, res, next) => {
 exports.getProductDetails = (req, res, next) => {
     const productId = req.params.productId
         // console.log(product);
-    Product.findById(productId)
-        .then(([product]) => {
-            res.render('shop/product-details', {
-                prods: product[0],
-                docTitle: 'Product Details',
-                path: 'Product_Dvetails',
-                folder: 'product',
-                img_url: 'https://loremflickr.com/320/240/',
+    Product.findById(productId, product => {
+        console.log(product);
+        res.render('shop/product-details', {
+            prods: product,
+            docTitle: 'Product Details',
+            path: 'Product_Dvetails',
+            folder: 'product',
+            img_url: 'https://loremflickr.com/320/240/',
 
-            });
-        })
-        .catch(err => console.log(err))
+        });
+    })
 }
 
 exports.getCart = (req, res, next) => {
