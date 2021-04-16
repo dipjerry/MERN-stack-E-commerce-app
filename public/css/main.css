@@ -1,0 +1,12 @@
+/* main {
+    padding: 1rem;
+    background-color: blueviolet;
+} */
+
+.gradient {
+    background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+}
+
+#summary {
+    background-color: #f6f6f6;
+}
