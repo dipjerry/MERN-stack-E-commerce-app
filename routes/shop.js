@@ -5,7 +5,8 @@ router.get('/', shopController.getIndex);
 router.get('/shop', shopController.getProduct);
 router.post('/cart', shopController.postCart);
 router.get('/cart', shopController.getCart);
-router.get('/checkout', shopController.getCheckout);
+router.get('/order', shopController.getCheckoutDetails);
+router.post('/checkout', shopController.postCheckout);
 router.get('/product/:productId', shopController.getProductDetails);
 router.post('/cart-delete-item', shopController.cartDeleteItem);
 
