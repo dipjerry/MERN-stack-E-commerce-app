@@ -4,7 +4,6 @@ const hostname = '127.0.0.1'
 const port = 3000
 const app = express()
 const path = require('path')
-    // const db = require('./util/database')
 const adminRoutes = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
 const errorController = require('./controllers/error.js')
