@@ -8,7 +8,6 @@ const sequelize = require('./util/database')
 const adminRoutes = require('./routes/admin')
 const shopRoutes = require('./routes/shop')
 const errorController = require('./controllers/error.js')
-const { resolveSoa } = require('dns')
     // Models import
 const Product = require('./models/product')
 const User = require('./models/user')
