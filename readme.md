@@ -1,3 +1,3 @@
 # Ecommerce Website
 
-## Using MYSQL and Sequalize
+## Using NoMYSQL or MOngoDB
