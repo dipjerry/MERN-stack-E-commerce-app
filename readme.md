@@ -1,3 +1,3 @@
 # Ecommerce Website
 
-## Using SQL MOngoDB
+## Using noSQL MOngoDB
