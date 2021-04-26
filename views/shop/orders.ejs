@@ -20,7 +20,7 @@
                             <h3>
                                 <%= p._id %>
                             </h3>
-                            <% p.items.forEach(item=>{ %>
+                            <% p.products.forEach(item=>{ %>
 
 
                                 <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
@@ -30,7 +30,7 @@
                                             <img class="h-24" src="<%= img_url+p.title %>" alt="">
                                         </div>
                                         <div class="flex flex-col justify-between ml-4 flex-grow">
-                                            <span class="font-bold text-sm"><%= item.title  %></span>
+                                            <span class="font-bold text-sm"><%= item.product.title  %></span>
                                             <span class="text-red-500 text-xs">Apple</span>
                                             <form action="/cart-delete-item" method="POST">
                                                 <input type="hidden" name="productId" value="<%= item._id %>">
@@ -47,9 +47,9 @@
             </svg>
                                     </div>
                                     <span class="text-center w-1/5 font-semibold text-sm">₹
-                                    <%= item.price %></span>
+                                    <%= item.product.price %></span>
                                     <span class="text-center w-1/5 font-semibold text-sm">₹
-                                    <%= item.price * item.quantity%></span>
+                                    <%= item.product.price * item.quantity%></span>
                                 </div>
                                 <%})
                         });
