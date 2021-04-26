@@ -24,13 +24,13 @@
                                 <div class="flex w-2/5">
                                     <!-- product -->
                                     <div class="w-20">
-                                        <img class="h-24" src="<%= img_url+p.title %>" alt="">
+                                        <img class="h-24" src="<%= img_url+p.productId.title %>" alt="">
                                     </div>
                                     <div class="flex flex-col justify-between ml-4 flex-grow">
-                                        <span class="font-bold text-sm"><%= p.title %></span>
+                                        <span class="font-bold text-sm"><%= p.productId.title %></span>
                                         <span class="text-red-500 text-xs">Apple</span>
                                         <form action="/cart-delete-item" method="POST">
-                                            <input type="hidden" name="productId" value="<%= p._id %>">
+                                            <input type="hidden" name="productId" value="<%= p.productId._id %>">
                                             <input type="submit" value="Remove" class="font-semibold hover:text-red-500 cursor-pointer text-gray-500 text-xs bg-transparent">
 
                                         </form>
@@ -49,9 +49,9 @@
             </svg>
                                 </div>
                                 <span class="text-center w-1/5 font-semibold text-sm">₹
-                                    <%= p.price %></span>
+                                    <%= p.productId.price %></span>
                                 <span class="text-center w-1/5 font-semibold text-sm">₹
-                                    <%= p.price * p.quantity%></span>
+                                    <%= p.productId.price * p.quantity%></span>
                             </div>
                             <%}) %>
 
