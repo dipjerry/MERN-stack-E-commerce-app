@@ -30,6 +30,7 @@
                                         <span class="font-bold text-sm"><%= p.productId.title %></span>
                                         <span class="text-red-500 text-xs">Apple</span>
                                         <form action="/cart-delete-item" method="POST">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                             <input type="hidden" name="productId" value="<%= p.productId._id %>">
                                             <input type="submit" value="Remove" class="font-semibold hover:text-red-500 cursor-pointer text-gray-500 text-xs bg-transparent">
 
@@ -84,6 +85,7 @@
                                 <span>$600</span>
                             </div>
                             <form action="/checkout" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <button type="submit" class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
                             </form>
                         </div>

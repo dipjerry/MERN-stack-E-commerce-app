@@ -28,16 +28,20 @@
                                 </div>
                                 <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
                                     <div class="flex items-center justify-start">
-                                        <form action="/cart" method="POST">
-                                            <input type="text" name="productId" value="<%= product._id %>">
-                                            <button type="submit" class="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-                                    Add to cart
-                                  </button>
-                                        </form>
-                                        <p class="mx-auto text-gray-800 text-2xl my-6 py-4 px-8 mb-5 font-bold">
-                                            ₹
-                                            <%= product.price %>
-                                        </p>
+                                        <% if(isLoggedin == true){ %>
+
+                                            <form action="/cart" method="POST">
+                                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                <input type="text" name="productId" value="<%= product._id %>">
+                                                <button type="submit" class="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                                        Add to cart
+                                      </button>
+                                            </form>
+                                            <% } %>
+                                                <p class="mx-auto text-gray-800 text-2xl my-6 py-4 px-8 mb-5 font-bold">
+                                                    ₹
+                                                    <%= product.price %>
+                                                </p>
                                     </div>
                                 </div>
                             </div>

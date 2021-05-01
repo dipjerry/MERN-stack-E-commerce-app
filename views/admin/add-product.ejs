@@ -1,5 +1,5 @@
-<%- include('../includes/header.ejs') %>
-    <%- include('../includes/navigation-admin.ejs') %>
+<%- include('../includes/header') %>
+    <%- include('../includes/navigation-shop') %>
 
         <main>
             <!-- <form action="./add-product" class="w3-container" method="POST">
@@ -24,6 +24,7 @@
                         </div>
                         <div class="m-5">
                             <form action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST" id="form">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <div class="mb-6">
                                     <label for="name" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Product Name</label>
                                     <input type="text" name="title" id="name" value="<% if(editing){ %><%= product.title%><% }else{ %><% } %>" placeholder="Product name" required class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-blue dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500 text-black"

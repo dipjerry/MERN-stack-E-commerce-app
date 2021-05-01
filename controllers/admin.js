@@ -5,7 +5,8 @@ exports.getAddProduct = (req, res, next) => {
         docTitle: 'Add Product',
         path: 'add_product',
         folder: 'admin',
-        editing: false
+        editing: false,
+        isLoggedin: req.session.isLoggedIn
     });
 };
 exports.postAddProduct = (req, res, next) => {
@@ -30,16 +31,14 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
     Product.find()
-        // .select('title price')  // for filter data 
-        // .populate('userId')
         .then(products => {
-            // console.log(products);
             res.render('admin/product', {
                 prods: products,
                 docTitle: 'Admin',
                 path: 'admin',
                 img_url: 'https://loremflickr.com/320/240/',
                 hasProduct: products.length > 0,
+                isLoggedin: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -62,7 +61,8 @@ exports.getEditProduct = (req, res, next) => {
                 path: 'add_product',
                 folder: 'admin',
                 editing: editMode,
-                product: product
+                product: product,
+                isLoggedin: req.session.isLoggedIn
             });
         })
         .catch(err => {

@@ -9,7 +9,7 @@ exports.getProduct = (req, res, next) => {
                 path: 'index',
                 img_url: 'https://loremflickr.com/320/240/',
                 hasProduct: products.length > 0,
-                folder: 'shop'
+                // isLoggedin: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -24,7 +24,8 @@ exports.getIndex = (req, res, next) => {
                 docTitle: 'Index',
                 path: 'index',
                 hasProduct: products.length > 0,
-                folder: 'shop'
+                // isLoggedin: req.session.isLoggedIn,
+                // csrfToken: req.csrfToken()
             });
         })
         .catch(err => {
@@ -41,6 +42,7 @@ exports.getProductDetails = (req, res, next) => {
                 docTitle: 'Shop',
                 path: 'Shop',
                 img_url: 'https://loremflickr.com/320/240/',
+                // isLoggedin: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -60,7 +62,8 @@ exports.getCart = (req, res, next) => {
                 docTitle: 'Your Cart',
                 hasProduct: products.length > 0,
                 img_url: 'https://loremflickr.com/320/240/',
-                prods: products
+                prods: products,
+                // isLoggedin: req.session.isLoggedIn
             });
         })
         .catch(err => console.log(err));
@@ -119,6 +122,7 @@ exports.getCheckoutDetails = (req, res, next) => {
                 path: 'co',
                 img_url: 'https://loremflickr.com/320/240/',
                 hasProduct: orders.length > 0,
+                // isLoggedin: req.session.isLoggedIn
             });
         })
         .catch(err => console.log(err));

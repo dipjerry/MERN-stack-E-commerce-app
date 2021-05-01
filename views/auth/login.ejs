@@ -1,0 +1,58 @@
+<%- include('../includes/header') %>
+    <%- include('../includes/navigation-shop') %>
+        <main>
+            <div class="flex items-center min-h-screen bg-gray-50 dark:bg-gray-900">
+                <div class="container mx-auto">
+                    <div class="max-w-md mx-auto my-10 bg-red-50 p-5 rounded-md shadow-sm">
+                        <div class="text-center">
+                            <!-- <h1 class="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">
+                                <% if(editing){ %>Edit an existing product
+                                    <% }else{ %>Add a new product
+                                        <% } %>
+                            </h1> -->
+                            <h1 class="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">
+                                Login
+                            </h1>
+
+                        </div>
+                        <div class="m-5">
+                            <% if (isLoggedin) { %>
+                                <h1 class="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">
+                                    You are already logged in
+                                </h1>
+                                <div class="my-3  items-center">
+                                    <button onclick="document.location.href = '/'" class="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none">continue</button>
+                                </div>
+                                <% }  else { if(errorMessage){ %>
+                                    <h3 class="text-lg text-red-600">
+                                        <%= errorMessage %>
+                                    </h3>
+                                    <% } %>
+                                        <form action="/login" method="POST" id="form">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <div class="mb-6">
+                                                <label for="userName" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">UserName</label>
+                                                <input type="text" Name="name" id="userName" placeholder="Enter your username" required class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-blue dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500 text-black"
+                                                />
+                                            </div>
+                                            <div class="mb-6">
+                                                <label for="Password" class="text-sm text-gray-600 dark:text-gray-400">Password</label>
+                                                <input type="text" Name="password" id="Password" placeholder="wnter your Password" required class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-red dark:placeholder-blue-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500 text-black"
+                                                />
+                                            </div>
+                                            <div class="mb-6">
+                                                <button type="submit" class="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none">Login</button>
+                                            </div>
+                                            <p class="text-base text-center text-gray-400" id="result">
+                                            </p>
+                                        </form>
+                                        <h4 class="mt-6 text-base text-red-500">
+                                            Not registered ?<a class="text-red" href="/signup">click here</a>
+                                        </h4>
+                                        <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <%- include('../includes/footer.ejs') %>

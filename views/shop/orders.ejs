@@ -33,6 +33,7 @@
                                             <span class="font-bold text-sm"><%= item.product.title  %></span>
                                             <span class="text-red-500 text-xs">Apple</span>
                                             <form action="/cart-delete-item" method="POST">
+                                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                                 <input type="hidden" name="productId" value="<%= item._id %>">
                                                 <input type="submit" value="Remove" class="font-semibold hover:text-red-500 cursor-pointer text-gray-500 text-xs bg-transparent">
                                             </form>
