@@ -1,3 +1,3 @@
 # Ecommerce Website
 
-## Using NoMYSQL or MOngoDB
+## Using Mongodb with Mongoose
