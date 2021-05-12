@@ -21,16 +21,16 @@
                                     <%= errorMessage %>
                                 </h3>
                                 <% } %>
-                                    <form action="/signup" method="POST" id="form">
+                                    <form action="/signup" method="POST" id="form" novalidate>
                                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                         <div class="mb-6">
                                             <label for="name" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">UserName</label>
-                                            <input type="text" Name="name" id="userName" placeholder="Enter your username" required class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-blue dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500 text-black"
+                                            <input type="text" Name="name" id="userName" value="<%= oldInput.name %>" placeholder="Enter your username" required class="w-full px-3 py-2 placeholder-gray-300 border <%= validationError.find(e=>e.param==='name')?'border-red-600': 'border-gray-300' %> rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-blue dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500 text-black"
                                             />
                                         </div>
                                         <div class="mb-6">
                                             <label for="email" class="block mb-2 text-sm text-gray-600 dark:text-gray-400">Email</label>
-                                            <input type="email" Name="email" id="email" placeholder="Enter your email" required class="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-blue dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500 text-black"
+                                            <input type="email" Name="email" id="email" value="<%= oldInput.email %>" placeholder="Enter your email" required class="w-full px-3 py-2 placeholder-gray-300 border <%= validationError.find(e=>e.param==='email')?'border-red-600': 'border-gray-300' %> rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-blue dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500 text-black"
                                             />
                                         </div>
                                         <div class="mb-6">

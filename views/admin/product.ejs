@@ -32,6 +32,8 @@
                                         <a href="/admin/edit-product/<%= product._id %>?edit=true" class="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">Edit</a>
                                         <!-- <a href="/admin/delete-product/<%= product.id %>" class="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">Delete</a> -->
                                         <form action="/admin/delete-product" method="POST">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                                             <input type="hidden" name="productId" value="<%= product._id %>">
                                             <button type="submit" class="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                                                 delete
@@ -42,7 +44,7 @@
                             </div>
                             <!-- </div> -->
                             <%} } else{ %>
-                                <h2>No product found</h2>
+                                <h2 class="text-black text-6xl">No product found</h2>
 
                                 <% } %>
                 </div>

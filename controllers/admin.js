@@ -1,18 +1,41 @@
 const Product = require('../models/product');
 const mongodb = require('mongodb');
+const { validationResult } = require('express-validator/check');
+
 exports.getAddProduct = (req, res, next) => {
     res.render('admin/add-product', {
         docTitle: 'Add Product',
         path: 'add_product',
         folder: 'admin',
+        hasError: false,
         editing: false,
-        isLoggedin: req.session.isLoggedIn
+        errorMessage: null,
+        validationError: null
     });
 };
+
 exports.postAddProduct = (req, res, next) => {
     const title = req.body.title;
     const price = req.body.price;
     const description = req.body.description;
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        console.log(error)
+        return res.status(422).render('admin/add-product', {
+            docTitle: 'Edit Product',
+            path: 'add_product',
+            folder: 'admin',
+            editing: false,
+            hasError: true,
+            product: {
+                title: title,
+                price: price,
+                description: description
+            },
+            errorMessage: error.array()[0].msg,
+            validationError: error.array()
+        });
+    }
     const product = new Product({
         title: title,
         price: price,
@@ -30,21 +53,22 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-    Product.find()
+    Product.find({ userId: req.user._id })
         .then(products => {
             res.render('admin/product', {
                 prods: products,
                 docTitle: 'Admin',
                 path: 'admin',
+
                 img_url: 'https://loremflickr.com/320/240/',
                 hasProduct: products.length > 0,
-                isLoggedin: req.session.isLoggedIn
             });
         })
         .catch(err => {
             console.log(err);
         });
 };
+
 exports.getEditProduct = (req, res, next) => {
     const editMode = req.query.edit;
     if (!editMode) {
@@ -61,24 +85,49 @@ exports.getEditProduct = (req, res, next) => {
                 path: 'add_product',
                 folder: 'admin',
                 editing: editMode,
+                hasError: false,
+                errorMessage: null,
                 product: product,
-                isLoggedin: req.session.isLoggedIn
+                validationError: null
             });
         })
         .catch(err => {
             console.log(err);
         });
 };
+
 exports.postEditProduct = (req, res, next) => {
     const id = req.body.productId;
     const updatedTitle = req.body.title;
     const updatedPrice = req.body.price;
     const updatedDescription = req.body.description;
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        console.log(error)
+        return res.status(422).render('admin/add-product', {
+            docTitle: 'Edit Product',
+            path: 'add_product',
+            folder: 'admin',
+            editing: true,
+            hasError: true,
+            product: {
+                title: updatedTitle,
+                price: updatedPrice,
+                description: updatedDescription,
+                _id : id
+            },
+            errorMessage: error.array()[0].msg,
+            validationError: error.array()
+            
+        });
+    }
     Product.findById(id).then(product => {
+            if (product.userId.toString() !== req.user._id.toString()) {
+                return res.redirect('/admin/products');
+            }
             product.title = updatedTitle;
             product.price = updatedPrice;
             product.description = updatedDescription;
-            // product.userId = req.user;
             return product.save();
         })
         .then(result => {

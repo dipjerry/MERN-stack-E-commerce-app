@@ -2,14 +2,26 @@ const express = require('express');
 const router = express.Router();
 const productController = require('../controllers/admin');
 const isAuth = require('../middleware/isAuth');
+const { body } = require('express-validator/check');
 // const products = [];
 // /admin/add-product => GET
 router.get('/add-product', isAuth, productController.getAddProduct);
 // /admin/add-product => POST
-router.post('/add-product', isAuth, productController.postAddProduct);
+router.post('/add-product', [
+        body('title').isString().isLength({ min: 3 }).trim(),
+        body('price').isFloat(),
+        body('description').isLength({ min: 10, max: 400 }).trim(),
+    ],
+    isAuth, productController.postAddProduct);
 
 router.get('/edit-product/:productId', isAuth, productController.getEditProduct);
-router.post('/edit-product', isAuth, productController.postEditProduct);
+router.post('/edit-product', [
+        body('title').isString().isLength({ min: 3 }).trim(),
+        body('price').isFloat(),
+        body('description').isLength({ min: 10, max: 400 }).trim(),
+    ],
+    isAuth, productController.postEditProduct);
+
 router.post('/delete-product', isAuth, productController.deleteProduct);
 
 // /admin/add-product => POST
