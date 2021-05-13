@@ -20,7 +20,7 @@ exports.postAddProduct = (req, res, next) => {
     const description = req.body.description;
     const error = validationResult(req);
     if (!error.isEmpty()) {
-        console.log(error)
+
         return res.status(422).render('admin/add-product', {
             docTitle: 'Edit Product',
             path: 'add_product',
@@ -48,7 +48,9 @@ exports.postAddProduct = (req, res, next) => {
             res.redirect('/admin/products');
         })
         .catch(err => {
-            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         });
 };
 
@@ -65,7 +67,9 @@ exports.getProducts = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         });
 };
 
@@ -77,6 +81,7 @@ exports.getEditProduct = (req, res, next) => {
     const prodId = req.params.productId;
     Product.findById(prodId)
         .then(product => {
+
             if (!product) {
                 return res.redirect('/');
             }
@@ -92,7 +97,9 @@ exports.getEditProduct = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         });
 };
 
@@ -103,7 +110,6 @@ exports.postEditProduct = (req, res, next) => {
     const updatedDescription = req.body.description;
     const error = validationResult(req);
     if (!error.isEmpty()) {
-        console.log(error)
         return res.status(422).render('admin/add-product', {
             docTitle: 'Edit Product',
             path: 'add_product',
@@ -114,11 +120,11 @@ exports.postEditProduct = (req, res, next) => {
                 title: updatedTitle,
                 price: updatedPrice,
                 description: updatedDescription,
-                _id : id
+                _id: id
             },
             errorMessage: error.array()[0].msg,
             validationError: error.array()
-            
+
         });
     }
     Product.findById(id).then(product => {
@@ -147,7 +153,9 @@ exports.deleteProduct = (req, res, next) => {
             console.log('Product destoyed');
         })
         .catch(err => {
-            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         });
     res.redirect('/admin/products');
 };

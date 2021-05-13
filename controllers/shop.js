@@ -13,7 +13,9 @@ exports.getProduct = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         });
 };
 
@@ -29,7 +31,9 @@ exports.getIndex = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         });
 };
 
@@ -46,7 +50,9 @@ exports.getProductDetails = (req, res, next) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         });
 };
 
@@ -66,7 +72,11 @@ exports.getCart = (req, res, next) => {
                 // isLoggedin: req.session.isLoggedIn
             });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 
 exports.postCart = (req, res, next) => {
@@ -79,7 +89,11 @@ exports.postCart = (req, res, next) => {
             console.log(result);
             res.redirect('/cart');
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 
 exports.postCheckout = (req, res, next) => {
@@ -98,7 +112,6 @@ exports.postCheckout = (req, res, next) => {
                 products: products
             });
 
-            console.log(order);
             return order.save();
         })
         .then(result => {
@@ -108,7 +121,11 @@ exports.postCheckout = (req, res, next) => {
         .then(() => {
             res.redirect('/order');
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 
 exports.getCheckoutDetails = (req, res, next) => {
@@ -125,7 +142,11 @@ exports.getCheckoutDetails = (req, res, next) => {
                 // isLoggedin: req.session.isLoggedIn
             });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 
 exports.cartDeleteItem = (req, res, next) => {
@@ -135,5 +156,9 @@ exports.cartDeleteItem = (req, res, next) => {
         .then(result => {
             res.redirect('/cart');
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
