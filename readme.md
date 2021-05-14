@@ -1,3 +1,3 @@
 # Ecommerce Website
 
-## Authentication and session added
+## Authentication and validation and error validation 

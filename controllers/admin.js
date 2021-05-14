@@ -10,7 +10,7 @@ exports.getAddProduct = (req, res, next) => {
         hasError: false,
         editing: false,
         errorMessage: null,
-        validationError: null
+        validationError: []
     });
 };
 
@@ -18,9 +18,26 @@ exports.postAddProduct = (req, res, next) => {
     const title = req.body.title;
     const price = req.body.price;
     const description = req.body.description;
+    const image = req.file;
     const error = validationResult(req);
+    console.log(image);
+    if (!image) {
+        return res.status(422).render('admin/add-product', {
+            docTitle: 'Edit Product',
+            path: 'add_product',
+            folder: 'admin',
+            editing: false,
+            hasError: true,
+            product: {
+                title: title,
+                price: price,
+                description: description
+            },
+            errorMessage: 'attached image is not an image',
+            validationError: []
+        });
+    }
     if (!error.isEmpty()) {
-
         return res.status(422).render('admin/add-product', {
             docTitle: 'Edit Product',
             path: 'add_product',
@@ -36,18 +53,23 @@ exports.postAddProduct = (req, res, next) => {
             validationError: error.array()
         });
     }
+    const imageUrl = image.path;
+    console.log("lol 1");
     const product = new Product({
         title: title,
         price: price,
+        imageurl: imageUrl,
         description: description,
         userId: req.user
     });
+    console.log(product);
     product.save()
         .then(result => {
             console.log('product Added');
             res.redirect('/admin/products');
         })
         .catch(err => {
+            // console.log(err);
             const error = new Error(err);
             error.httpStatusCode = 500;
             return next(error);
@@ -93,10 +115,11 @@ exports.getEditProduct = (req, res, next) => {
                 hasError: false,
                 errorMessage: null,
                 product: product,
-                validationError: null
+                validationError: []
             });
         })
         .catch(err => {
+            console.log(err);
             const error = new Error(err);
             error.httpStatusCode = 500;
             return next(error);
@@ -153,6 +176,7 @@ exports.deleteProduct = (req, res, next) => {
             console.log('Product destoyed');
         })
         .catch(err => {
+
             const error = new Error(err);
             error.httpStatusCode = 500;
             return next(error);
