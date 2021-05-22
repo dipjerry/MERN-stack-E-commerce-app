@@ -37,12 +37,46 @@ const csrfProtection = csrf();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 //using parser 
+
+// disk object
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './images/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname.replace(/\s/g, '_'));
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    if (
+        file.mimetype === 'image/png' ||
+        file.mimetype === 'image/jpg' ||
+        file.mimetype === 'image/jpeg'
+    ) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
+
 // text only
 app.use(bodyParser.urlencoded({ extended: false }));
 // multiple
-// app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'));
+// app.use(
+//     multer({ dest: 'images' }).single('image')
+// );
+app.use(
+    multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
+);
+// app.use(
+//     multer().single('image')
+// );
+
 // static folder info
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 // setting up session
 app.use(session({
     secret: 'my secret',
@@ -52,22 +86,7 @@ app.use(session({
 }));
 // initialise csrf middleware
 app.use(csrfProtection);
-// disk object 
-const fileStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'images');
-    },
-    filename: (req, file, cb) => {
-        cb(null, new Date().toISOString() + '-' + file.originalname);
-    }
-});
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/png' || file.mimitype === 'image/jpg' || file.mimitype === 'image/jpeg') {
-        cb(null, true);
-    } else {
-        cb(null, false);
-    }
-};
+
 // initialise notification
 app.use(flash());
 // include csrf token and authorization status in every request
@@ -98,15 +117,15 @@ app.use(authRoutes);
 app.get('/500', errorController.error500);
 app.use(errorController.error404);
 
-app.use((error, req, res, next) => {
-    res.redirect('/500');
-    res.status(500).render('500', {
-        docTitle: 'Error 500 Page not found',
-        path: '/500',
-        folder: 'error',
-        isLoggedin: req.session.isLoggedIn
-    });
-});
+// app.use((error, req, res, next) => {
+//     res.redirect('/500');
+//     res.status(500).render('500', {
+//         docTitle: 'Error 500 Page not found',
+//         path: '/500',
+//         folder: 'error',
+//         isLoggedin: req.session.isLoggedIn
+//     });
+// });
 mongoose.connect(MONGODB_URI)
 
 .then(result => {

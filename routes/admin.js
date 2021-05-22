@@ -10,6 +10,7 @@ router.get('/add-product', isAuth, productController.getAddProduct);
 router.post('/add-product', [
         body('title').isString().isLength({ min: 3 }).trim(),
         body('price').isFloat(),
+        // body('image').isString(),
         body('description').isLength({ min: 10, max: 400 }).trim(),
     ],
     isAuth, productController.postAddProduct);

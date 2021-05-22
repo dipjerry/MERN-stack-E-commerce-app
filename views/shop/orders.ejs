@@ -17,9 +17,16 @@
                             <h3 class="font-semibold  text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
                         </div>
                         <% prods.forEach(p=>{ %>
-                            <h3>
-                                <%= p._id %>
-                            </h3>
+                            <div class="flex mt-10 mb-5 bg-red-300  items-end p-6 ">
+
+                                <h3 class="w-4/5 text-left text-lg ">
+                                    Order id -
+                                    <%= p._id %>
+                                </h3>
+                                <a href="/invoice/<%= p._id %>" class="font-semibold text-indigo-600 w-1/5 text-right">
+                                    <h3> Get Invoice</h3>
+                                </a>
+                            </div>
                             <% p.products.forEach(item=>{ %>
 
 

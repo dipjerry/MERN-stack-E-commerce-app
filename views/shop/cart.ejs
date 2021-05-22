@@ -2,10 +2,7 @@
     <%- include('../includes/navigation-shop.ejs') %>
         <div class="text-black container mx-auto mt-10">
             <% if (hasProduct) { %>
-
-
                 <div class="flex shadow-md my-10">
-
                     <div class="w-3/4 bg-white px-10 py-10">
                         <div class="flex justify-between border-b pb-8">
                             <h1 class="font-semibold text-2xl">Shopping Cart</h1>
@@ -24,7 +21,7 @@
                                 <div class="flex w-2/5">
                                     <!-- product -->
                                     <div class="w-20">
-                                        <img class="h-24" src="<%= img_url+p.productId.title %>" alt="">
+                                        <img class="h-24" src="/<%= p.productId.imageurl %>" alt="">
                                     </div>
                                     <div class="flex flex-col justify-between ml-4 flex-grow">
                                         <span class="font-bold text-sm"><%= p.productId.title %></span>
@@ -93,7 +90,7 @@
 
                 </div>
                 <% }  else{ %>
-                    <h2>No product found</h2>
-                    <% } %>
+                    <h1 class="text-6xl">No product found</h2>
+                        <% } %>
         </div>
         <%- include('../includes/footer.ejs') %>

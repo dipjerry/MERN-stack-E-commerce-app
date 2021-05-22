@@ -21,6 +21,10 @@ const orderSchema = new Schema({
             ref: 'User',
             required: true
         }
+    },
+    order_date: {
+        type: Date,
+        default: Date.now
     }
 });
 

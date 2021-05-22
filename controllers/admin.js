@@ -1,6 +1,7 @@
 const Product = require('../models/product');
 const mongodb = require('mongodb');
 const { validationResult } = require('express-validator/check');
+const fileHelper = require('../util/file');
 
 exports.getAddProduct = (req, res, next) => {
     res.render('admin/add-product', {
@@ -20,6 +21,7 @@ exports.postAddProduct = (req, res, next) => {
     const description = req.body.description;
     const image = req.file;
     const error = validationResult(req);
+
     console.log(image);
     if (!image) {
         return res.status(422).render('admin/add-product', {
@@ -53,8 +55,9 @@ exports.postAddProduct = (req, res, next) => {
             validationError: error.array()
         });
     }
+    console.log(image);
+    console.log(image.path);
     const imageUrl = image.path;
-    console.log("lol 1");
     const product = new Product({
         title: title,
         price: price,
@@ -68,12 +71,13 @@ exports.postAddProduct = (req, res, next) => {
             console.log('product Added');
             res.redirect('/admin/products');
         })
-        .catch(err => {
-            // console.log(err);
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
-        });
+
+    .catch(err => {
+        // console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
+    });
 };
 
 exports.getProducts = (req, res, next) => {
@@ -131,8 +135,10 @@ exports.postEditProduct = (req, res, next) => {
     const updatedTitle = req.body.title;
     const updatedPrice = req.body.price;
     const updatedDescription = req.body.description;
+    // const updatedImage = req.file;
     const error = validationResult(req);
     if (!error.isEmpty()) {
+        console.log(error);
         return res.status(422).render('admin/add-product', {
             docTitle: 'Edit Product',
             path: 'add_product',
@@ -157,6 +163,10 @@ exports.postEditProduct = (req, res, next) => {
             product.title = updatedTitle;
             product.price = updatedPrice;
             product.description = updatedDescription;
+            if (image) {
+                fileHelper.deleteFile(product.imageurl);
+                product.image = updatedImage.path;
+            }
             return product.save();
         })
         .then(result => {
@@ -171,15 +181,20 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.deleteProduct = (req, res, next) => {
     const id = req.body.productId;
-    Product.findByIdAndRemove(id)
+    Product.findById(id).then(product => {
+            if (!product) {
+                return next(new Error('Product not found'));
+            }
+            fileHelper.deleteFile(product.imageurl);
+            return Product.findByIdAndRemove(id);
+        })
         .then(result => {
             console.log('Product destoyed');
+            res.redirect('/admin/products');
         })
         .catch(err => {
-
             const error = new Error(err);
             error.httpStatusCode = 500;
             return next(error);
         });
-    res.redirect('/admin/products');
 };
