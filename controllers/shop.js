@@ -48,6 +48,9 @@ exports.getProductDetails = (req, res, next) => {
         });
 };
 
+
+
+// get cart
 exports.getCart = (req, res, next) => {
     req.user
         .populate('cart.items.productId')
@@ -73,6 +76,7 @@ exports.postCart = (req, res, next) => {
             return req.user.addToCart(product);
         })
         .then(result => {
+
             console.log(result);
             res.redirect('/cart');
         })
