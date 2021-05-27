@@ -2,6 +2,8 @@ const Product = require('../models/product');
 const mongodb = require('mongodb');
 const { validationResult } = require('express-validator/check');
 const fileHelper = require('../util/file');
+const ITEMS_PER_PAGE = 5;
+
 
 exports.getAddProduct = (req, res, next) => {
     res.render('admin/add-product', {
@@ -55,8 +57,6 @@ exports.postAddProduct = (req, res, next) => {
             validationError: error.array()
         });
     }
-    console.log(image);
-    console.log(image.path);
     const imageUrl = image.path;
     const product = new Product({
         title: title,
@@ -81,7 +81,14 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-    Product.find({ userId: req.user._id })
+    const page = +req.query.page || 1;
+    let totalItems = 0;
+    Product.find().countDocuments().then(numProducts => {
+            totalItems = numProducts;
+            return Product.find()
+                .skip((page - 1) * ITEMS_PER_PAGE)
+                .limit(ITEMS_PER_PAGE);
+        })
         .then(products => {
             res.render('admin/product', {
                 prods: products,
@@ -90,6 +97,13 @@ exports.getProducts = (req, res, next) => {
 
                 img_url: 'https://loremflickr.com/320/240/',
                 hasProduct: products.length > 0,
+                currentPage: page,
+                hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+                hasPreviousPage: page > 1,
+                previousPage: page - 1,
+                nextPage: page + 1,
+                lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+
             });
         })
         .catch(err => {
@@ -180,7 +194,7 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.deleteProduct = (req, res, next) => {
-    const id = req.body.productId;
+    const id = req.params.productId;
     Product.findById(id).then(product => {
             if (!product) {
                 return next(new Error('Product not found'));
@@ -188,13 +202,11 @@ exports.deleteProduct = (req, res, next) => {
             fileHelper.deleteFile(product.imageurl);
             return Product.findByIdAndRemove(id);
         })
-        .then(result => {
+        .then(() => {
             console.log('Product destoyed');
-            res.redirect('/admin/products');
+            res.status(200).json({ message: "success!" });
         })
         .catch(err => {
-            const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
+            res.status(500).json({ message: "Deleteing product failed." });
         });
 };

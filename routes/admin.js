@@ -23,7 +23,7 @@ router.post('/edit-product', [
     ],
     isAuth, productController.postEditProduct);
 
-router.post('/delete-product', isAuth, productController.deleteProduct);
+router.delete('/product/:productId', isAuth, productController.deleteProduct);
 
 // /admin/add-product => POST
 
