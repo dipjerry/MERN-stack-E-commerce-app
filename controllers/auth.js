@@ -2,6 +2,7 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const config = require('../config');
 const { validationResult } = require('express-validator/check');
 // mail transporter
 const transporter = nodemailer.createTransport({
@@ -9,8 +10,8 @@ const transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: 'coderrat.blog@gmail.com',
-        pass: 'Groot@coderrat12'
+        user: config.email,
+        pass: config.email_password
     },
     tls: {
         // do not fail on invalid certs

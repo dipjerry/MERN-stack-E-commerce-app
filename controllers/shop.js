@@ -4,7 +4,9 @@ const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfmake');
 const static = require('../util/path');
+const config = require('../config');
 const ITEMS_PER_PAGE = 3;
+const stripe = require('stripe')(config.stripe_sk);
 
 exports.getProduct = (req, res, next) => {
     const page = +req.query.page || 1;
@@ -28,7 +30,6 @@ exports.getProduct = (req, res, next) => {
                 previousPage: page - 1,
                 nextPage: page + 1,
                 lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
-                    // isLoggedin: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -45,8 +46,6 @@ exports.getIndex = (req, res, next) => {
                 docTitle: 'Index',
                 path: 'index',
                 hasProduct: products.length > 0,
-                // isLoggedin: req.session.isLoggedIn,
-                // csrfToken: req.csrfToken()
             });
         })
         .catch(err => {
@@ -65,7 +64,6 @@ exports.getProductDetails = (req, res, next) => {
                 docTitle: 'Shop',
                 path: 'Shop',
                 img_url: 'https://loremflickr.com/320/240/',
-                // isLoggedin: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -81,14 +79,12 @@ exports.getCart = (req, res, next) => {
         .execPopulate()
         .then(user => {
             const products = user.cart.items;
-            console.log(user.cart.items);
             res.render('shop/cart', {
                 path: '/cart',
                 docTitle: 'Your Cart',
                 hasProduct: products.length > 0,
                 img_url: 'https://loremflickr.com/320/240/',
                 prods: products,
-                // isLoggedin: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -105,7 +101,6 @@ exports.postCart = (req, res, next) => {
             return req.user.addToCart(product);
         })
         .then(result => {
-            console.log(result);
             res.redirect('/cart');
         })
         .catch(err => {
@@ -115,7 +110,56 @@ exports.postCart = (req, res, next) => {
         });
 };
 
-exports.postCheckout = (req, res, next) => {
+exports.getCheckout = (req, res, next) => {
+    let products;
+    let total = 0;
+    req.user
+        .populate('cart.items.productId')
+        .execPopulate()
+        .then(user => {
+            products = user.cart.items;
+            // let total = 0;
+            products.forEach(p => {
+                total += p.quantity * p.productId.price;
+            });
+
+            return stripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                line_items: products.map(p => {
+                    return {
+                        name: p.productId.title,
+                        description: p.productId.description,
+                        amount: p.productId.price * 100,
+                        currency: 'inr',
+                        quantity: p.quantity
+                    };
+                }),
+                success_url: req.protocol + '://' + req.get('host') + '/checkout/success',
+                cancel_url: req.protocol + '://' + req.get('host') + '/checkout/cancel'
+
+            });
+        })
+        .then(session => {
+            res.render('shop/checkout', {
+                path: '/checkout',
+                docTitle: 'checkout',
+                hasProduct: products.length > 0,
+                img_url: 'https://loremflickr.com/320/240/',
+                prods: products,
+                totalSum: total,
+                sessionId: session.id,
+                stripe_pk: config.stripe_pk
+            });
+        })
+        .catch(err => {
+            console.error(err);
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
+};
+
+exports.getCheckoutSuccess = (req, res, next) => {
     req.user
         .populate('cart.items.productId')
         .execPopulate()
@@ -147,7 +191,7 @@ exports.postCheckout = (req, res, next) => {
         });
 };
 
-exports.getCheckoutDetails = (req, res, next) => {
+exports.getOrder = (req, res, next) => {
     Order.find({ 'user.userId': req.user._id })
         .then(orders => {
             console.log("orders = ");
@@ -158,7 +202,6 @@ exports.getCheckoutDetails = (req, res, next) => {
                 path: 'co',
                 img_url: 'https://loremflickr.com/320/240/',
                 hasProduct: orders.length > 0,
-                // isLoggedin: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -256,9 +299,6 @@ exports.getInvoice = (req, res, next) => {
                     margin: [0, 0, 0, 10]
                 },
                 subRows: {
-                    // fontSize: 16,
-                    // bold: true,
-                    // margin: [0, 10, 0, 5],
                     alignment: 'center',
 
                 },
