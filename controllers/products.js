@@ -6,15 +6,15 @@ exports.getAddProduct = (req, res, next) => {
         folder: 'admin',
         editing: false
     });
-}
+};
 exports.postAddProduct = (req, res, next) => {
     const title = req.body.title;
-    const price = req.body.price
-    const description = req.body.description
-    const product = new Product(null, title, price, description)
+    const price = req.body.price;
+    const description = req.body.description;
+    const product = new Product(null, title, price, description);
     product.save();
     res.redirect('/shop');
-}
+};
 exports.getEditProduct = (req, res, next) => {
     const editMode = req.query.edit;
     if (!editMode) {
@@ -32,22 +32,22 @@ exports.getEditProduct = (req, res, next) => {
             editing: editMode,
             product: product
         });
-    })
-}
+    });
+};
 exports.postEditProduct = (req, res, next) => {
-    const id = req.body.productId
-    const updatedTitle = req.body.title
-    const updatedPrice = req.body.price
-    const updatedDescription = req.body.description
-    const updatedProduct = new Product(id, updatedTitle, updatedPrice, updatedDescription)
+    const id = req.body.productId;
+    const updatedTitle = req.body.title;
+    const updatedPrice = req.body.price;
+    const updatedDescription = req.body.description;
+    const updatedProduct = new Product(id, updatedTitle, updatedPrice, updatedDescription);
     updatedProduct.save();
     res.redirect('/admin/products');
-}
+};
 exports.deleteProduct = (req, res, next) => {
-    const id = req.body.productId
+    const id = req.body.productId;
     Product.deleteById(id);
     res.redirect('/admin/products');
-}
+};
 
 
 
@@ -62,4 +62,4 @@ exports.getProducts = (req, res, next) => {
             folder: 'admin'
         });
     });
-}
+};

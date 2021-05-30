@@ -1,16 +1,16 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const hostname = '127.0.0.1'
-const port = 3000
-const app = express()
-const path = require('path')
-const adminRoutes = require('./routes/admin')
-const shopRoutes = require('./routes/shop')
-const errorController = require('./controllers/error.js')
-    //PUG
-    // which templete engines to use and where to finds the templete 
-    // app.set('view engine', 'pug'); // templete engine 
-    // app.set('views', 'views'); // the templet folder
+const express = require('express');
+const bodyParser = require('body-parser');
+const hostname = '127.0.0.1';
+const port = 3000;
+const app = express();
+const path = require('path');
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+const errorController = require('./controllers/error.js');
+//PUG
+// which templete engines to use and where to finds the templete 
+// app.set('view engine', 'pug'); // templete engine 
+// app.set('views', 'views'); // the templet folder
 
 //HANDLEBARS
 // const expressHbs = require('express-handlebars');
