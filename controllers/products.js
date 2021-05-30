@@ -15,6 +15,7 @@ exports.postAddProduct = (req, res, next) => {
     product.save();
     res.redirect('/shop');
 }
+
 exports.getEditProduct = (req, res, next) => {
     const editMode = req.query.edit;
     if (!editMode) {
@@ -32,7 +33,7 @@ exports.getEditProduct = (req, res, next) => {
             editing: editMode,
             product: product
         });
-    })
+    });
 }
 exports.postEditProduct = (req, res, next) => {
     const id = req.body.productId
