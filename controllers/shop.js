@@ -4,32 +4,16 @@ const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfmake');
 const static = require('../util/path');
-const ITEMS_PER_PAGE = 3;
-const config = require('../config');
 
 exports.getProduct = (req, res, next) => {
-    const page = +req.query.page || 1;
-    let totalItems = 0;
-    Product.find().countDocuments().then(numProducts => {
-            totalItems = numProducts;
-            return Product.find()
-                .skip((page - 1) * ITEMS_PER_PAGE)
-                .limit(ITEMS_PER_PAGE);
-        })
-        .then(products => {
+    Product.find().then(products => {
             res.render('shop/shop', {
                 prods: products,
                 docTitle: 'Index',
                 path: 'index',
                 img_url: 'https://loremflickr.com/320/240/',
                 hasProduct: products.length > 0,
-                currentPage: page,
-                hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-                hasPreviousPage: page > 1,
-                previousPage: page - 1,
-                nextPage: page + 1,
-                lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
-                    // isLoggedin: req.session.isLoggedIn
+                // isLoggedin: req.session.isLoggedIn
             });
         })
         .catch(err => {
