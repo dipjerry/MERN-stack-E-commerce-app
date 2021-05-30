@@ -2,6 +2,7 @@ const Product = require('../models/product');
 const mongodb = require('mongodb');
 const { validationResult } = require('express-validator/check');
 const fileHelper = require('../util/file');
+const config = require('../config');
 const ITEMS_PER_PAGE = 5;
 
 

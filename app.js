@@ -14,8 +14,9 @@ const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 const errorController = require('./controllers/error.js');
 const { resolveSoa } = require('dns');
+const config = require('./config');
 // database
-const MONGODB_URI = 'mongodb+srv://groot:grootMongo12@cluster0.eolis.mongodb.net/ecom';
+const MONGODB_URI = 'mongodb+srv://' + config.mongoUser + ':' + config.mongoPass + '@cluster0.eolis.mongodb.net/ecom';
 // Models import
 const User = require('./models/user');
 const mongoose = require('mongoose');
@@ -117,15 +118,15 @@ app.use(authRoutes);
 app.get('/500', errorController.error500);
 app.use(errorController.error404);
 
-// app.use((error, req, res, next) => {
-//     res.redirect('/500');
-//     res.status(500).render('500', {
-//         docTitle: 'Error 500 Page not found',
-//         path: '/500',
-//         folder: 'error',
-//         isLoggedin: req.session.isLoggedIn
-//     });
-// });
+app.use((error, req, res, next) => {
+    res.redirect('/500');
+    res.status(500).render('500', {
+        docTitle: 'Error 500 Page not found',
+        path: '/500',
+        folder: 'error',
+        isLoggedin: req.session.isLoggedIn
+    });
+});
 mongoose.connect(MONGODB_URI)
 
 .then(result => {

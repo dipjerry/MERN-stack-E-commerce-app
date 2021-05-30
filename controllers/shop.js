@@ -5,6 +5,7 @@ const path = require('path');
 const PDFDocument = require('pdfmake');
 const static = require('../util/path');
 const ITEMS_PER_PAGE = 3;
+const config = require('../config');
 
 exports.getProduct = (req, res, next) => {
     const page = +req.query.page || 1;
