@@ -1,5 +1,5 @@
 const express = require('express');
-const { check, body } = require('express-validator/check');
+const { check, body } = require('express-validator');
 const router = express.Router();
 const authController = require('../controllers/auth');
 const User = require('../models/user');
@@ -18,14 +18,11 @@ router.post(
     '/signup', [
         check('email').isEmail().withMessage('Please enter a valid email.')
         .custom((value, { req }) => {
-            // if (value === 'test@gmail.com') {
-            //     throw new Error('This email is forbideen');
-            // }
             return User.findOne({ email: value })
                 .then(userDoc => {
+                    console.log(userDoc);
+                    console.log(userDoc);
                     if (userDoc) {
-                        // req.flash('error', 'This email is already taken');
-                        // return res.redirect('/signup');
                         return Promise.reject('É-mail already exist , please select a different one.');
                     }
                 });
@@ -52,5 +49,4 @@ router.get('/passwordReset', authController.getPasswordReset);
 router.post('/passwordReset', authController.postPasswordReset);
 
 
-module.exports = router;
 module.exports = router;

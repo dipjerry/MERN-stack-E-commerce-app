@@ -127,9 +127,9 @@ app.use((error, req, res, next) => {
         isLoggedin: req.session.isLoggedIn
     });
 });
-mongoose.connect(MONGODB_URI)
-
-.then(result => {
+mongoose.set('useUnifiedTopology', true);
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
+    .then(result => {
         app.listen(port, hostname, () => {
             console.log(`Server running at http://${hostname}:${port}/`);
         });
