@@ -6,8 +6,6 @@ const https = require('https');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 // host and port 
-const hostname = '127.0.0.1';
-const port = 3000;
 const app = express();
 const helmet = require('helmet');
 const compression = require('compression');
@@ -144,8 +142,6 @@ mongoose.set('useUnifiedTopology', true);
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
     .then(result => {
         // https.createServer({key : privateKey , cert : certificate},app)
-        app.listen(process.env.PORT || 3000, hostname, () => {
-            console.log(`Server running at http://${hostname}:${process.env.PORT || 3000}/`);
-        });
+        app.listen(process.env.PORT || 3000);
     })
     .catch(err => console.log(err));
