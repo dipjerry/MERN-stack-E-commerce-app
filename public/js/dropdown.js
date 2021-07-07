@@ -1,24 +1,24 @@
-var navMenuDiv = document.getElementById("nav-content");
-var navMenu = document.getElementById("nav-toggle");
+const navMenuDiv = document.getElementById('nav-content');
+const navMenu = document.getElementById('nav-toggle');
 
 document.onclick = check;
 
 function check(e) {
-    var target = (e && e.target) || (event && event.srcElement);
+    const target = (e && e.target) || (event && event.srcElement);
 
-    //Nav Menu
+    // Nav Menu
     if (!checkParent(target, navMenuDiv)) {
         // click NOT on the menu
         if (checkParent(target, navMenu)) {
             // click on the link
-            if (navMenuDiv.classList.contains("hidden")) {
-                navMenuDiv.classList.remove("hidden");
+            if (navMenuDiv.classList.contains('hidden')) {
+                navMenuDiv.classList.remove('hidden');
             } else {
-                navMenuDiv.classList.add("hidden");
+                navMenuDiv.classList.add('hidden');
             }
         } else {
             // click both outside link and outside menu, hide menu
-            navMenuDiv.classList.add("hidden");
+            navMenuDiv.classList.add('hidden');
         }
     }
 }

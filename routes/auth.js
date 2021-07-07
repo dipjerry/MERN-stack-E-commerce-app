@@ -1,53 +1,57 @@
 const express = require('express');
-const { check, body } = require('express-validator');
+const {check, body} = require('express-validator');
 const router = express.Router();
 const authController = require('../controllers/auth');
 const User = require('../models/user');
 // login routes
 router.get('/login', authController.getLogin);
 router.post('/login', [
-    body('password', 'Password has to be valid')
-    .isLength({ min: 5 })
-    .isAlphanumeric()
-    .trim()
+  body('password', 'Password has to be valid')
+      .isLength({min: 5})
+      .isAlphanumeric()
+      .trim(),
 ], authController.postLogin);
 
 // signup routes
 router.get('/signup', authController.getSignup);
 router.post(
     '/signup', [
-        body('name', 'invalid UserName.')
-        .custom((value, { req }) => {
-            return User.findOne({ name: value })
-                .then(userDoc => {
-                    if (userDoc) {
-                        return Promise.reject('username already exist , please select a different one.');
-                    }
+      body('name', 'invalid UserName.')
+          .custom((value, {req}) => {
+            return User.findOne({name: value})
+                .then((userDoc) => {
+                  if (userDoc) {
+                    return Promise.reject(
+                        'username already exist ,please select a different one.',
+                    );
+                  }
                 });
-        }),
-        check('email').isEmail().withMessage('Please enter a valid email.')
-        .custom((value, { req }) => {
-            return User.findOne({ email: value })
-                .then(userDoc => {
-                    if (userDoc) {
-                        return Promise.reject('É-mail already exist , please select a different one.');
-                    }
+          }),
+      check('email').isEmail().withMessage('Please enter a valid email.')
+          .custom((value, {req}) => {
+            return User.findOne({email: value})
+                .then((userDoc) => {
+                  if (userDoc) {
+                    return Promise.reject(
+                        'É-mail already exist , please select a different one.',
+                    );
+                  }
                 });
-        })
-        .normalizeEmail(),
-        body('password', 'Password must contain minimum 5 alphanumeric character')
-        .isLength({ min: 5 })
-        .isAlphanumeric().trim(),
-        body('confirmPassword')
-        .trim().custom((value, { req }) => {
+          })
+          .normalizeEmail(),
+      body('password', 'Password must contain minimum 5 alphanumeric character')
+          .isLength({min: 5})
+          .isAlphanumeric().trim(),
+      body('confirmPassword')
+          .trim().custom((value, {req}) => {
             if (value !== req.body.password) {
-                throw new Error('Password doesnot match!!');
+              throw new Error('Password doesnot match!!');
             }
             return true;
-        }),
+          }),
 
     ],
-    authController.postSignup
+    authController.postSignup,
 );
 router.post('/logout', authController.postLogout);
 router.get('/reset/:token', authController.getNewPassword);
