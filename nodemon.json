@@ -1,11 +1,12 @@
 {
     "env": {
+        "DEFAULT_DB": "ecom",
+        "MONGO_USER": "groot",
+        "MONGO_PASSWORD": "grootMongo12",
         "EMAIL": "coderrat.blog@gmail.com",
         "EMAIL_PASSWORD": "Groot@coderrat12",
         "STRIPE_SK": "sk_test_51IvkHRSFB4BIJLRIK2GibcNZlsfgJJOAUxHjB6piVMcvYFdcFjv7gxg6Fz4KyLzukfJXZq3SQYDNXBpsXCM3xiYk00yrycK31q",
-        "STRIPE_PK": "pk_test_51IvkHRSFB4BIJLRIlWykvlsbWskO4OFLhIbATFo0LDzeMLI8YFkH7XyAvksStMqfOllCAJTl6nM6zfwIzs1keIOR00kTmpWN7L",
-        "MONGO_USER": "groot",
-        "MONGO_PASSWORD": "grootMongo12",
-        "DEFAULT_DB": "ecom"
+        "STRIPE_PK": "pk_test_51IvkHRSFB4BIJLRIlWykvlsbWskO4OFLhIbATFo0LDzeMLI8YFkH7XyAvksStMqfOllCAJTl6nM6zfwIzs1keIOR00kTmpWN7L"
+
     }
 }

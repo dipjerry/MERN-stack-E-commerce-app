@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfmake');
 const static = require('../util/path');
-const config = require('../config');
 const ITEMS_PER_PAGE = 3;
 const stripe = require('stripe')(process.env.STRIPE_SK);
 

@@ -20,7 +20,6 @@ const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 const errorController = require('./controllers/error.js');
 const { resolveSoa } = require('dns');
-const config = require('./config');
 // database
 const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.eolis.mongodb.net/${process.env.DEFAULT_DB}`;
 // const MONGODB_URI = `mongodb+srv://groot:grootMongo12@cluster0.eolis.mongodb.net/ecom`;
