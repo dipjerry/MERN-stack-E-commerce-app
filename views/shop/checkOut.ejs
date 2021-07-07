@@ -1,5 +1,55 @@
 <%- include('../includes/header.ejs') %>
     <%- include('../includes/navigation-shop.ejs') %>
 
-        <h1>checkout</h1>
+        <main class="text-black mt-20 flex flex-wrap content-center">
+            <div id="summary" class="lg:w-2/4 px-8 py-10 md:w-3/4 w-full mx-auto">
+                <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
+                <div class="flex justify-between mt-10 mb-5">
+                    <span class="font-semibold text-sm uppercase">Items -  <%= prods.length %></span>
+                    <span class="font-semibold text-sm">Rs. <%= totalSum %></span>
+                </div>
+                <div class="mt-10 mb-5">
+                    <label for="address" class="font-semibold inline-block mb-3 text-sm uppercase w-full">Address</label>
+                    <div class="border p-4 my-2"><span class="font-medium text-sm w-full">Guwahati 20</span></div>
+                    <a href="#" class="text-blue-400">Change</a>
+                </div>
+                <div>
+                    <label class="font-semibold inline-block mb-3 text-sm uppercase">Shipping</label>
+                    <select class="block p-2 text-gray-600 w-full text-sm">
+                             <option>Standard shipping - $10.00</option>
+                    </select>
+                </div>
+                <div class="py-10">
+                    <form action="">
+                        <label for="promo" class="font-semibold inline-block mb-3 text-sm uppercase w-full">Promo Code</label>
+                        <input type="text" id="promo" placeholder="Enter your code" class="p-2 text-sm w-3/5">
+                        <button class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase w-1/5">Apply</button>
+                    </form>
+                </div>
+
+                <div class="border-t mt-8">
+                    <div class="flex font-semibold justify-between py-6 text-sm uppercase">
+                        <span>Total cost</span>
+                        <span>Rs. <%= totalSum + 10 %>  </span>
+                    </div>
+                    <div class="flex justify-center">
+
+                        <!-- <form action="/postOrder" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>"> -->
+                        <button type="submit" id="order-btn" class="btn bg-indigo-500   font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-auto p-5">Checkout</button>
+                        <!-- </form> -->
+                        <script src="https://js.stripe.com/v3/"></script>
+                        <script>
+                            var stripe = Stripe('<%= stripe_pk %>');
+                            var orderBtn = document.getElementById('order-btn');
+                            orderBtn.addEventListener('click', function() {
+                                stripe.redirectToCheckout({
+                                    sessionId: '<%= sessionId %>'
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </main>
         <%- include('../includes/footer.ejs') %>

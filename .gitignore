@@ -1,3 +1,8 @@
 /.vscode
+<<<<<<< HEAD
 node_modules
 /config.js
+=======
+/node_modules
+/config.js
+>>>>>>> 91cfbb6e3c98144217752bae3eb0b68726326acf
