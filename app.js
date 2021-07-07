@@ -45,8 +45,9 @@ const store = new mongoDbStore({
 // adding csrf
 const csrfProtection = csrf();
 
-const privateKey = fs.readFileSync('server.key');
-const certificate = fs.readFileSync('server.cert');
+// const privateKey = fs.readFileSync('server.key');
+// const certificate = fs.readFileSync('server.cert');
+
 //EJS - templete engines
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -143,8 +144,8 @@ app.use((error, req, res, next) => {
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
     .then(result => {
-        https.createServer({key : privateKey , cert : certificate},app)
-        .listen(process.env.PORT || 3000, hostname, () => {
+        // https.createServer({key : privateKey , cert : certificate},app)
+        app.listen(process.env.PORT || 3000, hostname, () => {
             console.log(`Server running at http://${hostname}:${process.env.PORT || 3000}/`);
         });
     })

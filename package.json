@@ -3,9 +3,12 @@
     "version": "1.0.0",
     "description": "learn node ",
     "main": "app.js",
+    "engines": {
+        "node": "16.4.0"
+    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "process.env.NODE_ENV=Production process.env.EMAIL=coderrat.blog@gmail.com EMAIL_PASSWORD=Groot@coderrat12 STRIPE_SK=sk_test_51IvkHRSFB4BIJLRIK2GibcNZlsfgJJOAUxHjB6piVMcvYFdcFjv7gxg6Fz4KyLzukfJXZq3SQYDNXBpsXCM3xiYk00yrycK31q STRIPE_PK=pk_test_51IvkHRSFB4BIJLRIlWykvlsbWskO4OFLhIbATFo0LDzeMLI8YFkH7XyAvksStMqfOllCAJTl6nM6zfwIzs1keIOR00kTmpWN7L MONGO_USER=groot MONGO_PASSWORD=grootMongo12 DEFAULT_DB=ecom & node app.js ",
+        "start": "NODE_ENV=Production process.env.EMAIL=coderrat.blog@gmail.com EMAIL_PASSWORD=Groot@coderrat12 STRIPE_SK=sk_test_51IvkHRSFB4BIJLRIK2GibcNZlsfgJJOAUxHjB6piVMcvYFdcFjv7gxg6Fz4KyLzukfJXZq3SQYDNXBpsXCM3xiYk00yrycK31q STRIPE_PK=pk_test_51IvkHRSFB4BIJLRIlWykvlsbWskO4OFLhIbATFo0LDzeMLI8YFkH7XyAvksStMqfOllCAJTl6nM6zfwIzs1keIOR00kTmpWN7L MONGO_USER=groot MONGO_PASSWORD=grootMongo12 DEFAULT_DB=ecom & node app.js ",
         "start:dev": "nodemon app.js",
         "tailwindcss": "postcss public/css/tailwind.css -o public/css/style.css"
     },
