@@ -7,7 +7,7 @@ const person = {
 };
 const printName = ({ name }) => {
     console.log(name);
-}
+};
 printName(person);
 // via object destructuring 
 const { name, age } = person;
