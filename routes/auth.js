@@ -16,12 +16,19 @@ router.post('/login', [
 router.get('/signup', authController.getSignup);
 router.post(
     '/signup', [
+        body('name', 'invalid UserName.')
+        .custom((value, { req }) => {
+            return User.findOne({ name: value })
+                .then(userDoc => {
+                    if (userDoc) {
+                        return Promise.reject('username already exist , please select a different one.');
+                    }
+                });
+        }),
         check('email').isEmail().withMessage('Please enter a valid email.')
         .custom((value, { req }) => {
             return User.findOne({ email: value })
                 .then(userDoc => {
-                    console.log(userDoc);
-                    console.log(userDoc);
                     if (userDoc) {
                         return Promise.reject('É-mail already exist , please select a different one.');
                     }

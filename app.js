@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+const https = require('https');
 //parsers
 
 const bodyParser = require('body-parser');
@@ -7,6 +9,10 @@ const multer = require('multer');
 const hostname = '127.0.0.1';
 const port = 3000;
 const app = express();
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+
 //routes
 const path = require('path');
 const adminRoutes = require('./routes/admin');
@@ -16,7 +22,12 @@ const errorController = require('./controllers/error.js');
 const { resolveSoa } = require('dns');
 const config = require('./config');
 // database
-const MONGODB_URI = 'mongodb+srv://' + config.mongoUser + ':' + config.mongoPass + '@cluster0.eolis.mongodb.net/ecom';
+const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.eolis.mongodb.net/${process.env.DEFAULT_DB}`;
+// const MONGODB_URI = `mongodb+srv://groot:grootMongo12@cluster0.eolis.mongodb.net/ecom`;
+app.use(helmet());
+app.use(compression());
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flag: 'a' })
+app.use(morgan('combined', { stream: accessLogStream }));
 // Models import
 const User = require('./models/user');
 const mongoose = require('mongoose');
@@ -34,6 +45,8 @@ const store = new mongoDbStore({
 // adding csrf
 const csrfProtection = csrf();
 
+const privateKey = fs.readFileSync('server.key');
+const certificate = fs.readFileSync('server.cert');
 //EJS - templete engines
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -130,8 +143,9 @@ app.use((error, req, res, next) => {
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
     .then(result => {
-        app.listen(port, hostname, () => {
-            console.log(`Server running at http://${hostname}:${port}/`);
+        https.createServer({key : privateKey , cert : certificate},app)
+        .listen(process.env.PORT || 3000, hostname, () => {
+            console.log(`Server running at http://${hostname}:${process.env.PORT || 3000}/`);
         });
     })
     .catch(err => console.log(err));
