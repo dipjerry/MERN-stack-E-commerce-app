@@ -120,7 +120,8 @@ exports.getCheckout = (req, res, next) => {
         products.forEach((p) => {
           total += p.quantity * p.productId.price;
         });
-
+        console.log('hello');
+        console.log(user);
         return stripe.checkout.sessions.create({
           payment_method_types: ['card'],
           line_items: products.map((p) => {

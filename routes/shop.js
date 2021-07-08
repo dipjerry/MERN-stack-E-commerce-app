@@ -10,6 +10,7 @@ router.get('/order', isAuth, shopController.getOrder);
 // router.post('/postOrder', isAuth, shopController.postOrder);
 router.get('/product/:productId', shopController.getProductDetails);
 router.post('/cart-delete-item', isAuth, shopController.cartDeleteItem);
+
 router.get('/checkout', isAuth, shopController.getCheckout);
 router.get('/checkout/success', shopController.getCheckoutSuccess);
 router.get('/checkout/cancel', shopController.getCheckout);
