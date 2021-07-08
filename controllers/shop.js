@@ -137,7 +137,7 @@ exports.getCheckout = (req, res, next) => {
               quantity: p.quantity,
             };
           }),
-          success_url: req.protocol + '://' + req.get('host') + '/checkout/success',
+          success_url: req.protocol+'://' + req.get('host') + '/checkout/success',
           cancel_url: req.protocol + '://' + req.get('host') + '/checkout/cancel',
 
         });
@@ -146,7 +146,7 @@ exports.getCheckout = (req, res, next) => {
         console.log('session');
         console.log(session);
         console.log('PASSS');
-        res.render('shop/test', {
+        res.render('shop/checkout', {
           path: '/checkout',
           docTitle: 'checkout',
           hasProduct: products.length > 0,
