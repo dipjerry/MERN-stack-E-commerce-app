@@ -137,8 +137,8 @@ exports.getCheckout = (req, res, next) => {
               quantity: p.quantity,
             };
           }),
-          success_url: req.protocol + '://' + req.get('host') + '/checkout/success',
-          cancel_url: req.protocol + '://' + req.get('host') + '/checkout/cancel',
+          success_url: req.protocol+'s' + '://' + req.get('host') + '/checkout/success',
+          cancel_url: req.protocol +'s'+ '://' + req.get('host') + '/checkout/cancel',
 
         });
       })
