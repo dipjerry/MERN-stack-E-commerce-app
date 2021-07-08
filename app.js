@@ -140,7 +140,6 @@ app.use((error, req, res, next) => {
     path: '/500',
     folder: 'error',
     isLoggedin: req.session.isLoggedIn,
-    error: error,
   });
 });
 mongoose.set('useUnifiedTopology', true);
