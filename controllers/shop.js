@@ -146,7 +146,7 @@ exports.getCheckout = (req, res, next) => {
         console.log('session');
         console.log(session);
         console.log('PASSS');
-        res.render('shop/checkout', {
+        res.render('shop/checkOut', {
           path: '/checkout',
           docTitle: 'checkout',
           hasProduct: products.length > 0,
