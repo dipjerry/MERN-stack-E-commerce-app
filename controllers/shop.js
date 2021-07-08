@@ -122,6 +122,10 @@ exports.getCheckout = (req, res, next) => {
         });
         console.log('hello');
         console.log(user);
+        console.log('process.env.STRIPE_PK');
+        console.log(process.env.STRIPE_PK);
+        console.log('process.env.STRIPE_SK');
+        console.log(process.env.STRIPE_SK);
         return stripe.checkout.sessions.create({
           payment_method_types: ['card'],
           line_items: products.map((p) => {
