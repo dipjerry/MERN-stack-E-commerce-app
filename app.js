@@ -134,8 +134,8 @@ app.get('/500', errorController.error500);
 app.use(errorController.error404);
 
 app.use((error, req, res, next) => {
-  // res.redirect('/500');
-  res.status(500).render('500', {
+  res.redirect('/500');
+  return res.status(500).render('500', {
     docTitle: 'Error 500 Page not found',
     path: '/500',
     folder: 'error',
