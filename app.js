@@ -20,7 +20,9 @@ const errorController = require('./controllers/error.js');
 // database
 const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.eolis.mongodb.net/${process.env.DEFAULT_DB}`;
 // const MONGODB_URI = `mongodb+srv://groot:grootMongo12@cluster0.eolis.mongodb.net/ecom`;
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false,
+}));
 app.use(compression());
 const accessLogStream = fs.createWriteStream(
     path.join(__dirname, 'access.log'), {flag: 'a'});

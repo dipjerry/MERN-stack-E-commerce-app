@@ -1,0 +1,14 @@
+{
+    "name": "Create React App Sample",
+    "icons": [{
+        "src": "favicon.ico",
+        "sizes": "192x192",
+        "type": "image/png"
+    }],
+    "permissions": [
+        "...",
+        "https://supersweetdomainbutnotcspfriendly.com/",
+        "https://cdnjs.cloudflare.com",
+        "https://js.stripe.com"
+    ]
+}
