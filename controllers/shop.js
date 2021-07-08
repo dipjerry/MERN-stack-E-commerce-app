@@ -154,6 +154,7 @@ exports.getCheckout = (req, res, next) => {
           sessionId: session.id,
           stripe_pk: process.env.STRIPE_PK,
         });
+        console.log('PASSS2');
       })
       .catch((err) => {
         console.log('err');
