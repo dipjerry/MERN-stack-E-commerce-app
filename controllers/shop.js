@@ -143,6 +143,8 @@ exports.getCheckout = (req, res, next) => {
         });
       })
       .then((session) => {
+        console.log('session');
+        console.log(session);
         console.log('PASSS');
         res.render('shop/checkout', {
           path: '/checkout',
