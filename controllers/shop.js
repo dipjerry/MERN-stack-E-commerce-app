@@ -230,6 +230,8 @@ exports.getInvoice = (req, res, next) => {
     }
     const invoiceName = 'invoice-' + orderId + '.pdf';
     const invoicePath = path.join('data', 'invoice', invoiceName);
+    console.log(invoicePath);
+    console.log(invoiceName);
     const fonts = {
       Roboto: {
         normal: path.join(staticPath, 'public', 'fonts', 'Roboto-Regular.ttf'),
@@ -368,5 +370,8 @@ exports.getInvoice = (req, res, next) => {
     pdfDoc.pipe(fs.createWriteStream(invoicePath));
     pdfDoc.pipe(res);
     pdfDoc.end();
-  }).catch((err) => next(err));
+  }).catch((err) => {
+    console.log(err);
+    next(err);
+  });
 };
