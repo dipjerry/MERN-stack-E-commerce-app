@@ -365,9 +365,9 @@ exports.getInvoice = (req, res, next) => {
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader(
         'Content-Disposition',
-        'attachment;filename="' + invoiceName + '"');
+        'inline;filename="' + invoiceName + '"');
     const pdfDoc = printer.createPdfKitDocument(docDefinition);
-    pdfDoc.pipe(fs.createWriteStream(invoicePath));
+    pdfDoc.pipe(fs.createWriteStream('data/invoice' + invoiceName));
     pdfDoc.pipe(res);
     pdfDoc.end();
   }).catch((err) => {
