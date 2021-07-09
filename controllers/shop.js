@@ -361,7 +361,7 @@ exports.getInvoice = (req, res, next) => {
         alignment: 'center',
       },
     };
-    res.setHeader('Content-Length', stat.size);
+    // res.setHeader('Content-Length', stat.size);
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader(
         'Content-Disposition',
