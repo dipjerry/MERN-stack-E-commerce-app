@@ -120,12 +120,6 @@ exports.getCheckout = (req, res, next) => {
         products.forEach((p) => {
           total += p.quantity * p.productId.price;
         });
-        console.log('hello');
-        console.log(user);
-        console.log('process.env.STRIPE_PK');
-        console.log(process.env.STRIPE_PK);
-        console.log('process.env.STRIPE_SK');
-        console.log(process.env.STRIPE_SK);
         return stripe.checkout.sessions.create({
           payment_method_types: ['card'],
           line_items: products.map((p) => {
@@ -143,9 +137,6 @@ exports.getCheckout = (req, res, next) => {
         });
       })
       .then((session) => {
-        console.log('session');
-        console.log(session);
-        console.log('PASSS');
         res.render('shop/checkOut', {
           path: '/checkout',
           docTitle: 'checkout',
@@ -156,10 +147,8 @@ exports.getCheckout = (req, res, next) => {
           sessionId: session.id,
           stripe_pk: process.env.STRIPE_PK,
         });
-        console.log('PASSS2');
       })
       .catch((err) => {
-        console.log('err');
         console.log(err);
         const error = new Error(err);
         error.httpStatusCode = 500;
@@ -201,8 +190,6 @@ exports.getCheckoutSuccess = (req, res, next) => {
 exports.getOrder = (req, res, next) => {
   Order.find({'user.userId': req.user._id})
       .then((orders) => {
-        console.log('orders = ');
-        console.log(orders);
         res.render('shop/orders', {
           prods: orders,
           docTitle: 'orders',
@@ -235,7 +222,6 @@ exports.cartDeleteItem = (req, res, next) => {
 exports.getInvoice = (req, res, next) => {
   const orderId = req.params.orderId;
   Order.findById(orderId).then((order) => {
-    console.log(order);
     if (!order) {
       return next(new Error('No order found'));
     }

@@ -105,6 +105,7 @@ exports.postLogin = (req, res, next) => {
   const name = req.body.name;
   const password = req.body.password;
   const error = validationResult(req);
+  console.log(name + 'Logged in');
   if (!error.isEmpty()) {
     return res.status(422).render('auth/login', {
       docTitle: 'Index',
@@ -224,7 +225,6 @@ exports.postSignup = (req, res, next) => {
 exports.postLogout = (req, res, next) => {
   req.session.destroy((err) => {
     console.log(err);
-    // req.session.isLoggedIn = false;
     res.redirect('/login');
   });
 };
