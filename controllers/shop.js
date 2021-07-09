@@ -4,9 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfmake');
 const static = require('../util/path');
-const config = require('../config');
 const ITEMS_PER_PAGE = 3;
-const stripe = require('stripe')(config.stripe_sk);
+const stripe = require('stripe')(process.env.STRIPE_SK);
 
 exports.getProduct = (req, res, next) => {
     const page = +req.query.page || 1;
@@ -148,7 +147,7 @@ exports.getCheckout = (req, res, next) => {
                 prods: products,
                 totalSum: total,
                 sessionId: session.id,
-                stripe_pk: config.stripe_pk
+                stripe_pk: process.env.STRIPE_PK
             });
         })
         .catch(err => {

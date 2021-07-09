@@ -14,9 +14,10 @@ const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 const errorController = require('./controllers/error.js');
 const { resolveSoa } = require('dns');
-const config = require('./config');
+
 // database
-const MONGODB_URI = 'mongodb+srv://' + config.mongoUser + ':' + config.mongoPass + '@cluster0.eolis.mongodb.net/ecom';
+console.log(process.env.MONGO_USER);
+const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.eolis.mongodb.net/ecom`;
 // Models import
 const User = require('./models/user');
 const mongoose = require('mongoose');
