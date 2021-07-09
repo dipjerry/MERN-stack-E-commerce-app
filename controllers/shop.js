@@ -361,11 +361,11 @@ exports.getInvoice = (req, res, next) => {
         alignment: 'center',
       },
     };
-
+    res.setHeader('Content-Length', stat.size);
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader(
         'Content-Disposition',
-        'inline;filename="' + invoiceName + '"');
+        'attachment;filename="' + invoiceName + '"');
     const pdfDoc = printer.createPdfKitDocument(docDefinition);
     pdfDoc.pipe(fs.createWriteStream(invoicePath));
     pdfDoc.pipe(res);
