@@ -3,14 +3,32 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const {validationResult} = require('express-validator');
+const {google} = require('googleapis');
+const OAuth2 = google.auth.OAuth2;
 // mail transporter
+const oauth2Client = new OAuth2(
+    process.env.CLIENT_ID, // Client Secret
+    process.env.CLIENT_SECRET, // Client Secret
+    process.env.MAILER_REDIRECT, // Redirect URL
+);
+oauth2Client.setCredentials({
+  refresh_token: process.env.REFRESH_TOKEN,
+});
+const accessToken = oauth2Client.getAccessToken();
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
+  // host: 'smtp.gmail.com',
+  // port: 465,
+  // secure: true,
+  service: 'gmail',
   auth: {
+    type: 'OAuth2',
     user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASSWORD,
+    // pass: process.env.EMAIL_PASSWORD,
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    refreshToken: process.env.REFRESH_TOKEN,
+    accessToken: accessToken,
+
   },
   tls: {
     // do not fail on invalid certs
@@ -20,7 +38,7 @@ const transporter = nodemailer.createTransport({
 // mailer function
 mailOptions = (email, subject, message) => {
   const mails = {
-    from: 'coderrat.blog@gmail.com',
+    from: process.env.EMAIL,
     to: email,
     subject: subject,
     html: message,
@@ -185,11 +203,11 @@ exports.postSignup = (req, res, next) => {
         res.redirect('/login');
         transporter.sendMail(
             mailOptions(
-                'kaxyapdip@gmail.com',
+                email,
                 'Sign up successfull',
                 '<h3>dear ' + name +
                 '</h3>you have <b>Signup successfully</b><ul><li>username : ' +
-                name + '</li><li>password' + password + '</li></ul>'),
+                name + '</li><li>password : ' + password + '</li></ul>'),
             (error, info) => {
               if (error) {
                 console.log(error);

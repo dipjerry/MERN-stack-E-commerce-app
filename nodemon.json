@@ -6,7 +6,11 @@
         "EMAIL": "coderrat.blog@gmail.com",
         "EMAIL_PASSWORD": "Groot@coderrat12",
         "STRIPE_SK": "sk_test_51IvkHRSFB4BIJLRIK2GibcNZlsfgJJOAUxHjB6piVMcvYFdcFjv7gxg6Fz4KyLzukfJXZq3SQYDNXBpsXCM3xiYk00yrycK31q",
-        "STRIPE_PK": "pk_test_51IvkHRSFB4BIJLRIlWykvlsbWskO4OFLhIbATFo0LDzeMLI8YFkH7XyAvksStMqfOllCAJTl6nM6zfwIzs1keIOR00kTmpWN7L"
+        "STRIPE_PK": "pk_test_51IvkHRSFB4BIJLRIlWykvlsbWskO4OFLhIbATFo0LDzeMLI8YFkH7XyAvksStMqfOllCAJTl6nM6zfwIzs1keIOR00kTmpWN7L",
+        "CLIENT_ID": "847202240995-3sgue6bagqo2dv57kgata6s829p97ivu.apps.googleusercontent.com",
+        "CLIENT_SECRET": "pBV3SP2xwXgSvhEYxGoptHsv",
+        "REFRESH_TOKEN": "1//04hL0C2OsY1kBCgYIARAAGAQSNwF-L9IrMLq3JEd10_nuKyGJlYy9QPUHsm3D3-4Wwm0Z7Oz8mwUxqLED8bUHwjuf3tvMDuerKx8",
+        "MAILER_REDIRECT": "https://developers.google.com/oauthplayground"
 
     }
 }
