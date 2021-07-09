@@ -59,7 +59,6 @@ exports.getLogin = (req, res, next) => {
   } else {
     notification = null;
   }
-  console.log(req.flash('successMessage'));
   res.render('auth/login', {
     docTitle: 'Index',
     path: 'index',
@@ -175,7 +174,6 @@ exports.postSignup = (req, res, next) => {
 
   const error = validationResult(req);
   if (!error.isEmpty()) {
-    console.log(error.array());
     return res.status(422).render('auth/signup', {
       docTitle: 'Index',
       path: 'index',
