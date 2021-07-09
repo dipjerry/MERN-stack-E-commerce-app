@@ -1,8 +1,0 @@
-/.vscode
-/node_modules
-server.cart
-server.key
-access.log
-nodemon.json
-server.cert
-data/invoice/*.pdf
