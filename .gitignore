@@ -4,3 +4,4 @@ server.cart
 server.key
 access.log
 nodemon.json
+server.cert
