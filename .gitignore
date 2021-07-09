@@ -5,3 +5,4 @@ server.key
 access.log
 nodemon.json
 server.cert
+data/invoice
